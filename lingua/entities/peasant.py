@@ -1,6 +1,7 @@
-from ..utils import fstar
+import pygame
 
 from . import Person
+from ..utils import fstar
 
 STARTS = []
 HOMES = []

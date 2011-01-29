@@ -2,7 +2,7 @@ import pygame
 from pgu.algo import getline
 
 from . import Person
-from ..utils import astar, fstar, find_closest_path
+from ..utils import astar, find_closest_path
 
 class Player(Person):
     def __init__(self, *args, **kwargs):
@@ -14,7 +14,7 @@ class Player(Person):
     def walk(self, target):
         if not self.levels[target[0], target[1]]:
             target = find_closest_path(target, self.levels)
-        self.path = aramstar(self.rect.midbottom, target, self.levels)
+        self.path = astar(self.rect.midbottom, target, self.levels)
         if not self.path:
             self.path = getline(self.rect.midbottom, target)
             self.path.reverse()
