@@ -1,5 +1,9 @@
+import psyco
+psyco.full()
+
 import pygame
 from pygame.locals import *
+
 from lingua import Game
 
 pygame.init()
@@ -16,7 +20,7 @@ def main():
             if event.type == QUIT:
                 running = False
             elif event.type == MOUSEBUTTONDOWN:
-                game.click(*pygame.mouse.get_pos())
+                game.click(pygame.mouse.get_pos())
         game.loop()
     pygame.quit()
 
