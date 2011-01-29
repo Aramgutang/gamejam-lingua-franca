@@ -1,2 +1,4 @@
 pygame==1.9.1
 pgu==0.14
+psyco==2.0.0
+numpy==1.5.1

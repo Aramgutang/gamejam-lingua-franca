@@ -14,8 +14,6 @@ class Player(pygame.sprite.Sprite):
         self.path = []
     
     def walk(self, target):
-        if self.levels[target[0]][target[1]]:
-            print 'On a path!'
         self.path = aramstar(self.rect.midbottom, target, self.levels)
         if not self.path:
             self.path = getline(self.rect.midbottom, target)

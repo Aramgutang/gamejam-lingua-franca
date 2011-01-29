@@ -8,7 +8,7 @@ def directions(dx, dy):
     Returns the optimal order of directions to search in.
     Comments assume (1,1) is North-East.
     """
-    if abs(dx) < abs(dy/2.0):
+    if abs(dy*2) > abs(dx):
         if dy > 0:
             if dx > 0:
                 return [(0,-1),(-1,-1),(1,-1),(-1,0),(1,0),(-1,1),(1,1),(0,1)] #NNE
@@ -30,7 +30,7 @@ def directions(dx, dy):
                 return [(-1,1),(0,1),(-1,0),(1,1),(-1,-1),(1,0),(0,-1),(1,-1)] #SEE
             else:
                 return [(1,1),(0,1),(1,0),(-1,1),(1,-1),(-1,0),(0,-1),(-1,-1)] #SWW
-    elif abs(dy) < abs(dy/2.0):
+    elif abs(dy*2) > abs(dy):
         if dy > 0:
             if dx > 0:
                 return [(-1,0),(-1,-1),(-1,1),(0,-1),(0,1),(1,-1),(1,1),(1,0)] #EEN
@@ -54,7 +54,7 @@ def directions(dx, dy):
                 return [(1,1),(1,0),(0,1),(1,-1),(-1,1),(0,-1),(-1,0),(-1,-1)] #WSS
 
 def traversable(levels, x, y,):
-    return x >= 0 and x < len(levels) and y >= 0 and y < len(levels[0]) and levels[x][y]
+    return x >= 0 and x < levels.shape[0] and y >= 0 and y < levels.shape[1] and levels[x,y]
 
 class Node(object):
     def __init__(self, start, end, levels, length=0, parent=None):

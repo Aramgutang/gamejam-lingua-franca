@@ -1,5 +1,6 @@
 from operator import concat
 
+from numpy import array
 import pygame
 from pgu import algo, engine
 
@@ -15,9 +16,10 @@ class Game(object):
         width, height = levels_image.get_size()
         white = pygame.color.Color(255,255,255,255)
         #black = pygame.color.Color(0,0,0,255)
-        self.levels = [[levels_image.get_at((x,y)) == white \
+        self.levels = array([[levels_image.get_at((x,y)) == white \
             for y in range(height)] \
-            for x in range(width)]
+            for x in range(width)],
+            dtype=bool)
         # Initialise player
         self.player = Player(self.levels)
         # Populate sprites
