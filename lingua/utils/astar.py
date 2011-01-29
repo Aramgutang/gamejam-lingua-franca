@@ -116,7 +116,7 @@ def fstar(start, end, levels):
         counter += 1
         node = open.pop()
         closed.append(node)
-        if node.start == end or counter > 50:
+        if node.start == end or counter > 150:
             return node.path()
         for next in node.next():
             if next not in open and next not in closed:

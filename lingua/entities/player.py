@@ -5,11 +5,11 @@ from . import Person
 from ..utils import astar, find_closest_path
 
 class Player(Person):
-    def __init__(self, *args, **kwargs):
-        super(Player, self).__init__(*args, **kwargs)
+    def __init__(self, levels, position=(455.0, 350.0)):
+        super(Player, self).__init__(levels)
         self.image = pygame.image.load('assets/player.png')
         self.rect = self.image.get_rect()
-        self.rect.midbottom = (455.0, 350.0)
+        self.rect.midbottom = position
     
     def walk(self, target):
         if not self.levels[target[0], target[1]]:
