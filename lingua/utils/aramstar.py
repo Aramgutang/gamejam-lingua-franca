@@ -1,7 +1,6 @@
 from math import sqrt
 
-class NoPathFound(Exception):
-    pass
+from . import NoPathFound
 
 def directions(dx, dy):
     """
