@@ -9,7 +9,7 @@ from pygame.locals import *
 from lingua import Game
 
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((800, 600))#, FULLSCREEN)
 pygame.display.set_caption('Lingua Franca')
 game = Game(screen)
 clock = pygame.time.Clock()

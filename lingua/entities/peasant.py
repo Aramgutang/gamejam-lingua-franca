@@ -2,36 +2,34 @@ import pygame
 from random import randint
 
 from . import Person
-from ..utils import fstar
+from ..utils import astar
 
 STARTS = []
 HOMES = []
 TARGETS = []
 WHARFS = [(53, 430), (104, 253), (264, 80)]
 
-ACTIVE_PEASANTS = 4
+ACTIVE_PEASANTS = 40
 
 class Peasant(Person):
     def __init__(self, levels, position, game):
         super(Peasant, self).__init__(levels)
+        self.wait()
         self.game = game
         self.target = None
         self.image = pygame.image.load('assets/player.png')
         self.rect = self.image.get_rect()
         self.rect.midbottom = position
-        self.wait()
     
     def wait(self):
         self.waiting = True
-        self.wait_counter = randint(60,2400)
+        self.wait_counter = randint(60,240)
     
     def walk(self, target):
         self.target = None
         self.waiting = False
-        self.path = fstar(self.rect.midbottom, target, self.levels)
-        if not self.path:
-            self.wait()
-        elif self.path[0] != target:
+        self.path = astar(self.rect.midbottom, target, self.levels)
+        if self.path and self.path[0] != target:
             self.target = target
     
     def get_busy(self):
@@ -48,3 +46,5 @@ class Peasant(Person):
         super(Peasant, self).update()
         if not self.path and self.target:
             self.walk(self.target)
+        elif not self.path and not self.waiting:
+            self.wait()
