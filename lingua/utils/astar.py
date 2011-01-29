@@ -1,4 +1,4 @@
-from math import sqrt
+#from numpy import sqrt
 
 from . import NoPathFound
 
@@ -89,7 +89,7 @@ class Node(object):
     def path(self):
         return [self.start,] + (self.parent.path() if self.parent else [])
 
-def aramstar(start, end, levels):
+def astar(start, end, levels):
     if not traversable(levels, *start) or not traversable(levels, *end):
         return []
     open = [Node(start, end, levels),]
@@ -103,7 +103,23 @@ def aramstar(start, end, levels):
             if next not in open and next not in closed:
                 open.append(next)
                 if len(open) > 1 and next > open[-2]:
-                    open.sort(reverse=True)
+                    open.sort(reverse=True) # Can't use insort because list is reversed
     raise NoPathFound()
-    
-        
+
+def fstar(start, end, levels):
+    if not traversable(levels, *start) or not traversable(levels, *end):
+        return []
+    open = [Node(start, end, levels),]
+    closed = []
+    counter = 0
+    while open:
+        counter += 1
+        node = open.pop()
+        closed.append(node)
+        if node.start == end or counter > 50:
+            return node.path()
+        for next in node.next():
+            if next not in open and next not in closed:
+                open.append(next)
+                if len(open) > 1 and next > open[-2]:
+                    open.sort(reverse=True) # Can't use insort because listis reverse

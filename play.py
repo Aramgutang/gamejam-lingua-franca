@@ -1,3 +1,5 @@
+# Credits: Wade Clarke -- music
+
 import psyco
 psyco.full()
 

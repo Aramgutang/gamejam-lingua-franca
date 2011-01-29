@@ -6,7 +6,6 @@ from . import NoPathFound
 
 def find_closest_path(target, levels):
     for radius in count(1):
-        print radius
         found = check_radius(radius, array(target), levels)
         if found is not None:
             return found

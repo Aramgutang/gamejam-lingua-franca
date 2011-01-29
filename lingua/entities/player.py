@@ -1,17 +1,15 @@
 import pygame
-from pgu.algo import astar, getline
+from pgu.algo import getline
 
-from ..utils import aramstar, find_closest_path
+from . import Person
+from ..utils import astar, fstar, find_closest_path
 
-class Player(pygame.sprite.Sprite):
-    def __init__(self, levels):
-        super(Player, self).__init__()
+class Player(Person):
+    def __init__(self, *args, **kwargs):
+        super(Player, self).__init__(*args, **kwargs)
         self.image = pygame.image.load('assets/player.png')
         self.rect = self.image.get_rect()
-        #self.rect.midbottom = self.image.get_size()
-        self.rect.midbottom = (100,100)
-        self.levels = levels
-        self.path = []
+        self.rect.midbottom = (455.0, 350.0)
     
     def walk(self, target):
         if not self.levels[target[0], target[1]]:
@@ -20,8 +18,3 @@ class Player(pygame.sprite.Sprite):
         if not self.path:
             self.path = getline(self.rect.midbottom, target)
             self.path.reverse()
-    
-    def update(self):
-        if self.path:
-            new_pos = self.path.pop()
-            self.rect.midbottom = new_pos
