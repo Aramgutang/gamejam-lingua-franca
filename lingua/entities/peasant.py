@@ -1,8 +1,9 @@
 import pygame
-from random import randint
+from pgu.algo import getline
+from random import randint, choice
 
 from . import Person
-from ..utils import astar
+from ..utils import astar, find_closest_path
 
 STARTS = []
 HOMES = []
@@ -16,8 +17,8 @@ class Peasant(Person):
         super(Peasant, self).__init__(levels)
         self.wait()
         self.game = game
-        self.target = None
-        self.image = pygame.image.load('assets/player.png')
+        self.home = None
+        self.image = pygame.image.load('assets/peasant.png')
         self.rect = self.image.get_rect()
         self.rect.midbottom = position
     
@@ -26,11 +27,8 @@ class Peasant(Person):
         self.wait_counter = randint(60,240)
     
     def walk(self, target):
-        self.target = None
         self.waiting = False
         self.path = astar(self.rect.midbottom, target, self.levels)
-        if self.path and self.path[0] != target:
-            self.target = target
     
     def get_busy(self):
         if len(filter(lambda x: not x.waiting, self.game.peasants)) >= ACTIVE_PEASANTS:
@@ -44,7 +42,23 @@ class Peasant(Person):
             if not self.wait_counter:
                 self.get_busy()
         super(Peasant, self).update()
-        if not self.path and self.target:
-            self.walk(self.target)
+        if not self.path and tuple(self.rect.midbottom) in WHARFS:
+            wharf = WHARFS.index(tuple(self.rect.midbottom))
+            box = self.game.wharfs[wharf]
+            if box.rect.midbottom != self.rect.midbottom:
+                return
+            self.game.wharfs[wharf] = None
+            self.attach_box(box)
+            self.home = choice(HOMES)
+            self.walk(find_closest_path(self.home, self.levels))
+        elif not self.path and self.box and self.home:
+            if tuple(self.rect.midbottom) == self.home:
+                self.box.kill()
+                self.box = None
+                self.path = getline(self.rect.midbottom, find_closest_path(self.home, self.levels))
+                self.path.reverse()
+            else:
+                self.path = getline(self.rect.midbottom, self.home)
+                self.path.reverse()
         elif not self.path and not self.waiting:
             self.wait()

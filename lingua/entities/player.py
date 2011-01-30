@@ -5,8 +5,9 @@ from . import Person
 from ..utils import astar, find_closest_path
 
 class Player(Person):
-    def __init__(self, levels, position=(455.0, 350.0)):
+    def __init__(self, levels, position, game):
         super(Player, self).__init__(levels)
+        self.game = game
         self.image = pygame.image.load('assets/player.png')
         self.rect = self.image.get_rect()
         self.rect.midbottom = position
